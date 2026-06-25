@@ -1,0 +1,13 @@
+{
+  "paths": {
+    "script_root": "D:/agent-automation/scripts",
+    "log_root": "D:/agent-automation/logs"
+  },
+  "tasks": {
+    "example": {
+      "task_name": "AgentExampleTask",
+      "script_path": "D:/agent-automation/scripts/example.ps1"
+    }
+  }
+}
+

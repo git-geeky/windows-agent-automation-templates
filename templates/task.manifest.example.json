@@ -1,0 +1,10 @@
+{
+  "task_name": "AgentExampleTask",
+  "task_description": "Runs a generic local agent maintenance script.",
+  "start_boundary": "2026-01-01T09:00:00",
+  "user_id": "LOCAL_USER",
+  "runner_vbs": "D:/agent-automation/scripts/run-ps-hidden.vbs",
+  "script_path": "D:/agent-automation/scripts/example.ps1",
+  "script_arguments": "-Mode example"
+}
+
