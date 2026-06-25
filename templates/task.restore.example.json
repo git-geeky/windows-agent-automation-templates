@@ -1,0 +1,8 @@
+{
+  "TASK_DESCRIPTION": "Runs a generic local agent task.",
+  "START_BOUNDARY": "2026-01-01T09:00:00",
+  "USER_ID": "LOCAL_USER",
+  "RUNNER_VBS": "D:/agent-automation/scripts/run-ps-hidden.vbs",
+  "SCRIPT_PATH": "D:/agent-automation/scripts/example-task.ps1",
+  "SCRIPT_ARGUMENTS": "-Mode example"
+}

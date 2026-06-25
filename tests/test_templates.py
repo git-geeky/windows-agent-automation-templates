@@ -10,6 +10,7 @@ PRIVATE_PATTERNS = [
     r"BEGIN [A-Z ]*PRIVATE KEY",
     r"api[_-]?key\s*[:=]\s*['\"][^'\"]+",
     r"token\s*[:=]\s*['\"][^'\"]+",
+    r"private\.example",
 ]
 
 
@@ -24,17 +25,17 @@ class TemplateTests(unittest.TestCase):
     def test_task_xml_template_parses_after_placeholder_fill(self):
         path = self.root / "task-xml" / "AgentTask.template.xml"
         text = path.read_text(encoding="utf-8")
-        replacements = {
-            "{{TASK_DESCRIPTION}}": "Runs a generic task.",
-            "{{START_BOUNDARY}}": "2026-01-01T09:00:00",
-            "{{USER_ID}}": "LOCAL_USER",
-            "{{RUNNER_VBS}}": "D:/agent-automation/scripts/run-ps-hidden.vbs",
-            "{{SCRIPT_PATH}}": "D:/agent-automation/scripts/example.ps1",
-            "{{SCRIPT_ARGUMENTS}}": "-Mode example",
-        }
+        manifest = json.loads((self.root / "templates" / "task.restore.example.json").read_text(encoding="utf-8"))
+        replacements = {f"{{{{{key}}}}}": str(value) for key, value in manifest.items()}
         for marker, value in replacements.items():
             text = text.replace(marker, value)
         ET.fromstring(text.encode("utf-16"))
+
+    def test_task_restore_manifest_covers_template_markers(self):
+        text = (self.root / "task-xml" / "AgentTask.template.xml").read_text(encoding="utf-8")
+        manifest = json.loads((self.root / "templates" / "task.restore.example.json").read_text(encoding="utf-8"))
+        markers = set(re.findall(r"{{([^}]+)}}", text))
+        self.assertEqual(markers, set(manifest))
 
     def test_no_private_markers(self):
         searchable = [".md", ".ps1", ".vbs", ".json", ".xml"]
